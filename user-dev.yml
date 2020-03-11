@@ -1,14 +1,5 @@
 server:
   port: 8099
-eureka:
-  client:
-    #表示注册到EurekaServer
-    register-with-eureka: true
-    #表示获取EurekaServer
-    fetch-registry: true
-    service-url:
-      #提供eureka
-      defaultZone: http://localhost:8000/eureka
 user-provider:
   ribbon:
     #轮询
