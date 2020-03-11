@@ -55,5 +55,5 @@ logging:
   level:
     com.lixun: debug
 test:
-  message: hello!
+  message: hello
 
