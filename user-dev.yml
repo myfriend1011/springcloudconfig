@@ -1,7 +1,4 @@
-server:
-  port: 8083
-  servlet:
-    context-path: /user-provider
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
