@@ -1,47 +1,41 @@
 server:
-  port: 8099
-user-provider:
-  ribbon:
-    #轮询
-    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
-    ConnectTimeout: 10000 # 连接超时时间
-    ReadTimeout: 2000 # 数据读取超时时间
-    MaxAutoRetries: 1 # 最大重试次数(第一个服务)
-    MaxAutoRetriesNextServer: 0 # 最大重试下一个服务次数(集群的情况才会用到)
-    OkToRetryOnAllOperations: false # 无论是请求超时或者socket read timeout都进行重试
+  port: 8089
+  servlet:
+    context-path: /user-provider
 spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/treval?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
   application:
-    name: user-consumer  #应用名称
-  devtools:
-    restart:
-      enabled: true
-# 配置熔断策略：
-hystrix:
-  command:
-    default:
-      circuitBreaker:
-        # 强制打开熔断器 默认false关闭的。测试配置是否生效
-        forceOpen: false
-        # 触发熔断错误比例阈值，默认值50%
-        errorThresholdPercentage: 50
-        # 熔断后休眠时长，默认值5秒
-        sleepWindowInMilliseconds: 10000
-        # 熔断触发最小请求次数，默认值是20
-        requestVolumeThreshold: 10
-      execution:
-        isolation:
-          thread:
-            # 熔断超时设置，默认为1秒
-            timeoutInMilliseconds: 2000
-feign:
-  hystrix:
-    enabled: true # 开启Feign的熔断功能
-  compression:
-    request:
-      enabled: true # 开启请求压缩
-      mime-types:    text/html,application/xml,application/json # 设置压缩的数据类型
-      min-request-size: 2048 # 设置触发压缩的大小下限
-      #以上数据类型，压缩大小下限均为默认值
+    name: user-provider   #服务提供者
+
+ribbon:
+  #轮询
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+  ConnectTimeout: 10000 # 连接超时时间
+  ReadTimeout: 2000 # 数据读取超时时间
+  MaxAutoRetries: 1 # 最大重试次数(第一个服务)
+  MaxAutoRetriesNextServer: 0 # 最大重试下一个服务次数(集群的情况才会用到)
+  OkToRetryOnAllOperations: false # 无论是请求超时或者socket read timeout都进行重试
+
+eureka:
+  client:
+    service-url:
+      #提供eureka
+      defaultZone: http://localhost:8000/eureka
+    #每隔30秒获取服务中心列表,(只读备份)
+    register-fetch-interval-seconds: 30
+  instance:
+    #指定ip地址
+    ip-address: 127.0.0.1
+    #访问服务的时候,推曾使用ip
+    perfer-ip-address: true
+    #租约到期,服务时效时间,默认值90秒
+    lease-expiration-duration-in-seconds: 90
+    #租约续约间隔时间,默认30秒
+    lease-renewal-interval-in-seconds: 30
 logging:
   level:
     com.lixun: debug
