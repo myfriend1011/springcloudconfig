@@ -34,5 +34,5 @@ logging:
   level:
     com.yanxu: debug
 test:
-  message: hello
+    message: hello
 
