@@ -1,5 +1,5 @@
 server:
-  port: 8089
+  port: 8083
   servlet:
     context-path: /user-provider
 spring:
@@ -38,7 +38,7 @@ eureka:
     lease-renewal-interval-in-seconds: 30
 logging:
   level:
-    com.lixun: debug
+    com.yanxu: debug
 test:
   message: hello
 
